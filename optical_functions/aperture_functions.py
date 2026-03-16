@@ -4,6 +4,7 @@ Reference:
  - Numerical Simulation of Optical Propagation - J. Schmidt (Appendix B MATLAB Code Listings)
 """
 import numpy as np
+from scipy.special import jv
 
 def rect(x,D=1):
     """
@@ -12,7 +13,7 @@ def rect(x,D=1):
     Args:
         x: Input array
     Returns:
-        y: Rectangular function output array
+        y: Rectangular function with width D
     """
     x = np.abs(x)
     y = (x < D/2).astype(float)
@@ -48,3 +49,12 @@ def circ(x,y,D):
     z = (r < D/2).astype(float)
     z[r == D/2] = 0.5
     return z
+
+def jinc(x):
+    y = np.ones_like(x)
+    print(y)
+    idx = x != 0
+    print(idx)
+    y[idx] = 2.0*jv(1,(np.pi*x[idx])/(np.pi*x[idx]))
+    print(y)
+    return y
