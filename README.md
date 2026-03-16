@@ -4,4 +4,4 @@ This is based on Jason Schmidt's book on 'Numerical Simulation of Optical Propag
 ## Repository Purpose
 This repo is simply for my own eduction into Github, Python, and Optics. Therefore, there will be a lot of amateur mistakes. I am in no way affiliated with J. Schmidt but I am super thankful of his work!
 ## Additional Notes
-The README.md will probably be updated in the future.
+The README.md will probably be updated in the future. The repository will also be updated periodically.
