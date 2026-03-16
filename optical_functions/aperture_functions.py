@@ -52,9 +52,6 @@ def circ(x,y,D):
 
 def jinc(x):
     y = np.ones_like(x)
-    print(y)
     idx = x != 0
-    print(idx)
-    y[idx] = 2.0*jv(1,(np.pi*x[idx])/(np.pi*x[idx]))
-    print(y)
+    y[idx] = 2.0*jv(1,(np.pi*x[idx]))/(np.pi*x[idx])
     return y
