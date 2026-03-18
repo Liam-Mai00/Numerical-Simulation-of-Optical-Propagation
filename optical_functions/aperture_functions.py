@@ -51,6 +51,14 @@ def circ(x,y,D):
     return z
 
 def jinc(x):
+    """
+    Creates a jinc function
+
+    Args:
+        x: Input array
+    Returns:
+        y: Outputs an array of jinc function defined by the Bessel function
+    """
     y = np.ones_like(x)
     idx = x != 0
     y[idx] = 2.0*jv(1,(np.pi*x[idx]))/(np.pi*x[idx])
