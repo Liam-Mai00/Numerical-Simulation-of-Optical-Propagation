@@ -5,12 +5,12 @@ This is based on Jason Schmidt's book on 'Numerical Simulation of Optical Propag
 This repo is simply for my own eduction into Github, Python, and Optics. I am not affiliated with J. Schmidt but I am thankful of his work!
 ## Setup
 The initial setup is recommended to prevent relative import errors and avoids `sys.path.insert()` hacks.
-[See here](https://stackoverflow.com/questions/6323860/sibling-package-imports/50193944#50193944)
+[See here](https://stackoverflow.com/questions/6323860/sibling-package-imports/50193944#50193944). The package is now updated using setuptools.
 - Open terminal
 - Activate virtual environment
 - Navigate to the repository
-- Run `pip install -e` (editable format)
-- Should see opt-prop package in site-package directory of your virtual environment
+- Run `pip install -e .` (editable format)
+- Should see optprop package in site-package directory of your virtual environment
 - Try running demos
 ## Additional Notes
 The repository should be updated periodically.
