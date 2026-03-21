@@ -3,7 +3,7 @@ Discrete Fourier Transform functions from Chapter 2
 When numerically calculating the DFT (through numpy or MATLAB libraries), factoring in the sampling interval is omitted.
 In this case, it is factored in. For more information, check the dft_scaling.ipynb file under Notes.
 """
-
+import numpy as np
 from numpy.fft import fft, fft2, fftshift, ifft, ifft2
 
 def ft(x,delta):
@@ -53,3 +53,30 @@ def ift2(X,delta_f):
     """
     N = len(X)
     x = fftshift(ifft2(fftshift(X))) * (N*delta_f)**2
+
+def myconv(A,B,delta):
+    """
+    Performs a 1D convolution of A and B using FT technique
+
+    Args:
+        A: Input array A
+        B: Input array B
+    Returns:
+        C: Convolution of A and B using FT method
+    """
+    N = len(A)
+    C = ift(ft(A,delta) * ft(B,delta), 1/(N*delta))
+    return C
+
+def myconv2(A,B,delta):
+    """
+    Performs a 2D convolution of A and B using FT technique
+
+    Args:
+        A: Input array A
+        B: Input array B
+    Returns:
+        C: 2D Convolution of A and B using FT method
+    """
+    N = np.shape(A)[0]
+    C = ift2(ft2(A,delta) * ft2(B,delta), 1/(N*delta))
