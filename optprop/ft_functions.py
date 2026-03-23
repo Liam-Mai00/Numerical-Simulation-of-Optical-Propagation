@@ -81,8 +81,5 @@ def myconv2(A,B,delta):
         C: 2D Convolution of A and B using FT method
     """
     N = np.shape(A)[0]
-    var1 = ft2(A,delta)
-    var2 = ft2(B,delta)
-    delta_f = 1/(N*delta)
-    C = ift2(ft2(var1 * var2, delta),delta_f)
+    C = ift2(ft2(A,delta) * ft2(B,delta), 1/(N*delta))
     return C
