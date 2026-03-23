@@ -4,7 +4,7 @@ When numerically calculating the DFT (through numpy or MATLAB libraries), factor
 In this case, it is factored in. For more information, check the dft_scaling.ipynb file under Notes.
 """
 import numpy as np
-from numpy.fft import fft, fft2, fftshift, ifft, ifft2
+from numpy.fft import fft, fft2, fftshift, ifft, ifft2, ifftshift
 
 def ft(x,delta):
     """
@@ -39,7 +39,8 @@ def ift(X,delta_f):
     Returns:
         X: Scaled IDFT output of x
     """
-    x = fftshift(ifft(fftshift(X))) * len(X) * delta_f
+    N = len(X)
+    x = ifftshift(ifft(ifftshift(X))) * (N*delta_f) # Uses the ifftshift to cancel effects of fftshift of ft when N is odd
     return x
 
 def ift2(X,delta_f):
@@ -52,7 +53,8 @@ def ift2(X,delta_f):
         X: Scaled 2D IDFT output of x
     """
     N = len(X)
-    x = fftshift(ifft2(fftshift(X))) * (N*delta_f)**2
+    x = ifftshift(ifft2(ifftshift(X))) * (N*delta_f)**2 # Uses the ifftshift to cancel effects of fftshift of ft2 when N is odd
+    return x
 
 def myconv(A,B,delta):
     """
@@ -79,4 +81,8 @@ def myconv2(A,B,delta):
         C: 2D Convolution of A and B using FT method
     """
     N = np.shape(A)[0]
-    C = ift2(ft2(A,delta) * ft2(B,delta), 1/(N*delta))
+    var1 = ft2(A,delta)
+    var2 = ft2(B,delta)
+    delta_f = 1/(N*delta)
+    C = ift2(ft2(var1 * var2, delta),delta_f)
+    return C
