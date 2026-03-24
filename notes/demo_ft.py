@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 DISPLAY_FIGS = True
 
-# Signal parameters
+#### Signal parameters
 ampl = 1                    # Signal Amplitude
 freq = 2                    # Signal frequency [Hz]
 samp_freq = 100             # Sampling frequency [Hz]
@@ -14,13 +14,13 @@ samp_period = 1/samp_freq   # Sampling preiod [s]
 phase = 0
 duration = 3                # Total signal duration [s]
 
-# Create cosine wave
+#### Create cosine wave
 t = np.arange(0,duration,samp_period)
 signal = ampl*np.cos(2*np.pi*freq*t + phase)
 f_signal = np.fft.fft(signal)
 f = np.fft.fftfreq(len(f_signal),samp_period)
 
-# Plot fft
+#### Plot fft
 if DISPLAY_FIGS:
     fig1,ax1 = plt.subplots()
     ax1.plot(t,signal,marker='x')

@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from optprop.ft_functions import myconv
 from optprop.aperture_functions import rect,tri
 
+#### Configure Optical Parameters
 N = 64         # Number of samples
 L = 8          # Spacial extent of grid [m]
 delta = L/N     # Spacial sample spacing [m]
