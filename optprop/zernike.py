@@ -72,8 +72,11 @@ def zernike(i,r,theta):
     m = zernike_index[i-1,1]
     i = zernike_index[i-1,2]    # Converts i to 1-based indexing
 
-    if i % 2 == 0:  # When i is even
-        Z = np.sqrt(2*(n+1)) * zrf(n,m,r) * np.cos(m*theta)
-    else:           # When i is odd
-        Z = np.sqrt(2*(n+1)) * zrf(n,m,r) * np.sin(m*theta)
+    if m == 0:
+        Z = np.sqrt(n+1) * zrf(n,0,r)
+    else:
+        if i % 2 == 0:  # When i is even
+            Z = np.sqrt(2*(n+1)) * zrf(n,m,r) * np.cos(m*theta)
+        else:           # When i is odd
+            Z = np.sqrt(2*(n+1)) * zrf(n,m,r) * np.sin(m*theta)
     return Z
