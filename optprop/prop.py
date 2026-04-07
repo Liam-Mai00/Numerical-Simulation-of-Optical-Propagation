@@ -35,12 +35,12 @@ def one_step_prop(Uin,wvl,d1,Dz):
     Returns:
         Uout: Complex field at the observation plane (x2,y2)
     """
-    N = np.shape(Uin)[0]
-    k = (2*np.pi)/wvl
-    x1 = np.arange(-N/2,N/2,1) * d1
-    x1,y1 = np.meshgrid(x1,x1) # Assume square grid
-    d2 = (wvl*Dz)/(N*d1)
-    x2 = np.arange(-N/2,N/2,1) * d2
-    x2,y2 = np.meshgrid(x2,x2)
-    Uout = (1/(1j*wvl*Dz)) * np.exp(1j*k/(2*Dz)*(x2**2 + y2**2)) * ft2(Uin*np.exp(1j*k/(2*Dz)*(x1**2+y2**2)), d1)
+    N = np.shape(Uin)[0]                # Number of samples
+    k = (2*np.pi)/wvl                   # Wavenumber
+    x1 = np.arange(-N/2,N/2,1) * d1     # 1D x1 coordinates
+    x1,y1 = np.meshgrid(x1,x1)          # Assume square grid
+    d2 = (wvl*Dz)/(N*d1)                # Define x2 spacing
+    x2 = np.arange(-N/2,N/2,1) * d2     # 1D x2 coordinates
+    x2,y2 = np.meshgrid(x2,x2)          # Assume square grid
+    Uout = (1/(1j*wvl*Dz)) * np.exp(1j*k/(2*Dz)*(x2**2+y2**2)) * ft2(Uin*np.exp(1j*k/(2*Dz)*(x1**2+y1**2)), d1)
     return Uout,x2,y2
