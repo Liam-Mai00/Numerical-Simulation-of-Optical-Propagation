@@ -2,7 +2,7 @@
 This module contains functions for various propagation techniques.
 """
 import numpy as np
-from .ft_functions import ft2
+from .ft_functions import ft2, ift2
 
 def fraunhofer_prop(Uin,wvl,d1,Dz):
     """
@@ -79,4 +79,19 @@ def two_step_prop(Uin,wvl,d1,d2,Dz):
     x2 = np.arange(-N/2,N/2,1) * d2
     x2,y2 = np.meshgrid(x2,x2)
     Uout = (1/(1j*wvl*Dz2)) * np.exp(1j*(k/(2*Dz2))*(x2**2+y2**2)) * ft2(Uitm*np.exp(1j*(k/(2*Dz2))*(x1a**2+y1a**2)),d1a)
+    return Uout,x2,y2
+
+def ang_spec_prop(Uin,wvl,d1,d2,Dz):
+    N = np.shape(Uin)[0]
+    k = (2*np.pi)/wvl
+    m = d2/d1
+    x1 = np.arange(-N/2,N/2,1) * d1
+    x1,y1 = np.meshgrid(x1,x1)
+    deltaf = 1/(N*d1)
+    fX = np.arange(-N/2,N/2,1) * deltaf
+    fX,fY = np.meshgrid(fX,fX)
+    x2 = np.arange(-N/2,N/2,1) * d2
+    x2,y2 = np.meshgrid(x2,x2)
+    Uitm = ft2(np.exp(1j*(k/2)*((1-m)/(Dz))*(x1**2+y1**2))*(1/m)*Uin, d1)
+    Uout = np.exp(1j*(k/2)*((m-1)/(m*Dz))*(x2**2+y2**2))*ift2(np.exp(-1j*(k/2)*(Dz/m)*(fX**2+fY**2))*Uitm, deltaf)
     return Uout,x2,y2
