@@ -73,8 +73,9 @@ def two_step_prop(Uin,wvl,d1,d2,Dz):
     d1a = wvl*np.abs(Dz1)/(N*d1)
     x1a = np.arange(-N/2,N/2,1) * d1a
     x1a,y1a = np.meshgrid(x1a,x1a)
+    
+    Uitm = (1/(1j*wvl*Dz1)) * np.exp(1j*(k/(2*Dz1))*(x1a**2+y1a**2)) * ft2(Uin*np.exp(1j*(k/(2*Dz1))*(x1**2+y1**2)),d1)
     Dz2 = Dz - Dz1
-    Uitm = (1/(1j*wvl*Dz1)) * np.exp(1j*(k/(2*Dz2))*(x1a**2+y1a**2)) * ft2(Uin*np.exp(1j*(k/(2*Dz1))*(x1**2+y1**2)),d1)
     x2 = np.arange(-N/2,N/2,1) * d2
     x2,y2 = np.meshgrid(x2,x2)
     Uout = (1/(1j*wvl*Dz2)) * np.exp(1j*(k/(2*Dz2))*(x2**2+y2**2)) * ft2(Uitm*np.exp(1j*(k/(2*Dz2))*(x1a**2+y1a**2)),d1a)
