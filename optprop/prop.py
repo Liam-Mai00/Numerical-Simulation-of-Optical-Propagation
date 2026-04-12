@@ -3,6 +3,7 @@ This module contains functions for various propagation techniques.
 """
 import numpy as np
 from .ft_functions import ft2, ift2
+from .grid import square_meshgrid
 
 def fraunhofer_prop(Uin,wvl,d1,Dz):
     """
@@ -54,7 +55,7 @@ def two_step_prop(Uin,wvl,d1,d2,Dz):
     This function performs the two-step propagation using the Fresnel integral
 
     Args:
-        Uin: Input field for one-step propagation (x1,y1)
+        Uin: Input field for two-step propagation (x1,y1)
         wvl: Wavelength [m]
         d1: Sampling interval at source plane [m]
         d2: Sampling interval at observation plane [m]
@@ -69,8 +70,8 @@ def two_step_prop(Uin,wvl,d1,d2,Dz):
     x1 = np.arange(-N/2,N/2,1) * d1
     x1,y1 = np.meshgrid(x1,x1)
     m = d2/d1
-    Dz1 = Dz/(1-m)
-    d1a = wvl*np.abs(Dz1)/(N*d1)
+    Dz1 = Dz/(1-m)                  # Equation 6.25
+    d1a = wvl*np.abs(Dz1)/(N*d1)    # Equation 6.19
     x1a = np.arange(-N/2,N/2,1) * d1a
     x1a,y1a = np.meshgrid(x1a,x1a)
     
@@ -82,16 +83,29 @@ def two_step_prop(Uin,wvl,d1,d2,Dz):
     return Uout,x2,y2
 
 def ang_spec_prop(Uin,wvl,d1,d2,Dz):
+    """
+    This function performs the angular spectrum propagation
+
+    Args:
+        Uin: Input field for angular spectrum propagation (x1,y1)
+        wvl: Wavelength [m]
+        d1: Sampling interval at source plane [m]
+        d2: Sampling interval at observation plane [m]
+        Dz: Propagation distance [m]
+    Returns:
+        Uout: Complex field at the observation plane (x2,y2)
+        x2: 2D meshgrid of x coordinates at observation
+        y2: 2D meshgrid of y coordinates at observation
+    """
     N = np.shape(Uin)[0]
     k = (2*np.pi)/wvl
     m = d2/d1
-    x1 = np.arange(-N/2,N/2,1) * d1
-    x1,y1 = np.meshgrid(x1,x1)
-    deltaf = 1/(N*d1)
-    fX = np.arange(-N/2,N/2,1) * deltaf
-    fX,fY = np.meshgrid(fX,fX)
-    x2 = np.arange(-N/2,N/2,1) * d2
-    x2,y2 = np.meshgrid(x2,x2)
-    Uitm = ft2(np.exp(1j*(k/2)*((1-m)/(Dz))*(x1**2+y1**2))*(1/m)*Uin, d1)
-    Uout = np.exp(1j*(k/2)*((m-1)/(m*Dz))*(x2**2+y2**2))*ift2(np.exp(-1j*(k/2)*(Dz/m)*(fX**2+fY**2))*Uitm, deltaf)
+    df1 = 1/(N*d1)
+    x1,y1 = square_meshgrid(N,d1)
+    fX,fY = square_meshgrid(N,df1)
+    x2,y2 = square_meshgrid(N,d2)
+    Q3 = np.exp(1j*(k/2)*((m-1)/(m*Dz))*(x2**2+y2**2))
+    Q2 = np.exp(-1j*np.pi**2*((2*Dz)/(k*m))*(fX**2+fY**2))
+    Q1 = np.exp(1j*(k/2)*((1-m)/(Dz))*(x1**2+y1**2))
+    Uout = Q3*ift2(Q2*ft2(Q1*Uin, d1), df1)
     return Uout,x2,y2

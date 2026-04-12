@@ -63,3 +63,13 @@ def jinc(x):
     idx = x != 0
     y[idx] = 2.0*jv(1,(np.pi*x[idx]))/(np.pi*x[idx])
     return y
+
+def point_source(x,y,A,D,wvl,Dz,xc=0,yc=0):
+    k = (2*np.pi)/wvl
+    r = np.sqrt(x**2 + y**2)
+    rsq = x**2 + y**2
+    rc = np.sqrt(xc**2 + yc**2)
+    rcsq = xc**2 + yc**2
+    arg = (D/(wvl*Dz))
+    pt = A * np.exp(-1j*(k/(2*Dz))*rsq) * np.exp(1j*(k/(2*Dz))*rcsq) * np.exp(-1j*(k/Dz)*rc*r) * arg**2 * np.sinc(arg*(x-xc)) * np.sinc(arg*(y-yc))
+    return pt
