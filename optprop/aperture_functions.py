@@ -65,6 +65,21 @@ def jinc(x):
     return y
 
 def point_source(x,y,A,D,wvl,Dz,xc=0,yc=0):
+    """
+    Creates a point source defined in Equation 6.92
+
+    Args:
+        x: 2D mesh of x-values
+        y: 2D mesh of y-values
+        A: Amplitude of point source
+        wvl: Wavelength [m]
+        Dz: Propagation distance [m]
+        xc: x value of point source centre
+        yc: y value of point source centre
+
+    Returns:
+        pt: Model point source centred around (xc,yc)
+    """
     k = (2*np.pi)/wvl
     r = np.sqrt(x**2 + y**2)
     rsq = x**2 + y**2
