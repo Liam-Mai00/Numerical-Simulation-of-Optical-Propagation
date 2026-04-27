@@ -137,11 +137,26 @@ def ang_spec_multi_prop_vac(Uin,wvl,delta1,deltan,z):
     z = np.array([0,z])
     n = len(z)
     Delta_z = z[1:n+1] - z[0:n]
-    alpha = z/z[n]
+    alpha = z/z[n-1]
     delta = (1-alpha) * delta1 + alpha*deltan
     m = delta[1:n+1] / delta[0:n]
     x1 = nx * delta[0]
     y1 = ny * delta[0]
     r1sq = x1**2 + y1**2
-    #### Incomplete ####
+    Q1 = np.exp(1j*k/2*(1-m[0])/Delta_z[0]*r1sq)
+    Uin = Uin * Q1
+    for idx in range(0,n):
+        deltaf = 1/(N*delta[idx])
+        fX = nx * deltaf
+        fY = ny * deltaf
+        fsq = fX**2 + fY**2
+        Z = Delta_z[idx]
+        Q2 = np.exp(-1j*np.pi**2*2*Z/m[idx]/k*fsq)
+        Uin = sg* ift2(Q2*\
+                       ft2(Uin/m[idx],delta[idx]),deltaf)
+        xn = nx*delta[n-1]
+        yn = ny*delta[n-1]
+        rnsq = xn**2 + yn**2
+        Q3 = np.exp(1j*k/2*(m[n-1]-1)/(m[n-1]*Z)*rnsq)
+        Uout = Q3 * Uin
     return Uout,xn,yn
