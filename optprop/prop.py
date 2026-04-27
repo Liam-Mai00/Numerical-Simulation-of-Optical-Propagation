@@ -112,3 +112,36 @@ def ang_spec_prop(Uin,wvl,d1,d2,Dz):
     Q3 = np.exp(1j*(k/2)*((m-1)/(m*Dz))*r2sq)
     Uout = Q3*ift2(Q2*ft2(Q1*Uin/m, d1), df1)
     return Uout,x2,y2
+
+def ang_spec_multi_prop_vac(Uin,wvl,delta1,deltan,z):
+    """
+    Function for arbitrary number of partial propagations
+
+    Args:
+        Uin: Input field for a number of partial propagations
+        wvl: Wavelength [m]
+        delta1: Source grid spacing [m]
+        deltan: Observation grid spacing [m]
+        z: Propagation distances [m]
+    Returns:
+        Uout: Output field after propagation
+        xn: x co-ordinates at observation plane
+        yn: y co-ordinates at observation plane
+    """
+    N = np.shape(Uin)[0]
+    nx,ny = square_meshgrid(N)
+    k = (2*np.pi)/wvl
+    nsq = nx**2+ny**2
+    w = 0.47*N
+    sg = np.exp(-nsq**8/w**16)  # Super gaussian function applied at intermediate propagation
+    z = np.array([0,z])
+    n = len(z)
+    Delta_z = z[1:n+1] - z[0:n]
+    alpha = z/z[n]
+    delta = (1-alpha) * delta1 + alpha*deltan
+    m = delta[1:n+1] / delta[0:n]
+    x1 = nx * delta[0]
+    y1 = ny * delta[0]
+    r1sq = x1**2 + y1**2
+    #### Incomplete ####
+    return Uout,xn,yn

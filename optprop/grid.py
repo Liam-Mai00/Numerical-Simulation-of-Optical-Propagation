@@ -1,6 +1,6 @@
 import numpy as np
 
-def square_meshgrid(N,delta):
+def square_meshgrid(N,delta=1):
     """
     This function addresses the square meshgrid repitition problem
     
