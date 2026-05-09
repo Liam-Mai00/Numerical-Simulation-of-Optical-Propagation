@@ -134,18 +134,18 @@ def ang_spec_multi_prop_vac(Uin,wvl,delta1,deltan,z):
     nsq = nx**2+ny**2
     w = 0.47*N
     sg = np.exp(-nsq**8/w**16)  # Super gaussian function applied at intermediate propagation
-    z = np.array([0,z])
+    z = np.hstack((0,z))
     n = len(z)
-    Delta_z = z[1:n+1] - z[0:n]
+    Delta_z = z[1:n] - z[0:n-1]
     alpha = z/z[n-1]
-    delta = (1-alpha) * delta1 + alpha*deltan
-    m = delta[1:n+1] / delta[0:n]
+    delta = (1-alpha) * delta1 + alpha * deltan
+    m = delta[1:n] / delta[0:n-1]
     x1 = nx * delta[0]
     y1 = ny * delta[0]
     r1sq = x1**2 + y1**2
     Q1 = np.exp(1j*k/2*(1-m[0])/Delta_z[0]*r1sq)
     Uin = Uin * Q1
-    for idx in range(0,n):
+    for idx in range(0,n-1):
         deltaf = 1/(N*delta[idx])
         fX = nx * deltaf
         fY = ny * deltaf
@@ -157,6 +157,6 @@ def ang_spec_multi_prop_vac(Uin,wvl,delta1,deltan,z):
         xn = nx*delta[n-1]
         yn = ny*delta[n-1]
         rnsq = xn**2 + yn**2
-        Q3 = np.exp(1j*k/2*(m[n-1]-1)/(m[n-1]*Z)*rnsq)
+        Q3 = np.exp(1j*k/2*(m[n-2]-1)/(m[n-2]*Z)*rnsq)
         Uout = Q3 * Uin
     return Uout,xn,yn
