@@ -115,7 +115,7 @@ def ang_spec_prop(Uin,wvl,d1,d2,Dz):
 
 def ang_spec_multi_prop_vac(Uin,wvl,delta1,deltan,z):
     """
-    Function for arbitrary number of partial propagations
+    Function for arbitrary number of partial propagations (Vacuum)
 
     Args:
         Uin: Input field for a number of partial propagations
@@ -159,4 +159,55 @@ def ang_spec_multi_prop_vac(Uin,wvl,delta1,deltan,z):
         rnsq = xn**2 + yn**2
         Q3 = np.exp(1j*k/2*(m[n-2]-1)/(m[n-2]*Z)*rnsq)
         Uout = Q3 * Uin
+    return Uout,xn,yn
+
+def ang_spec_multi_prop(Uin,wvl,delta1,deltan,z,t):
+    """
+    Function evaluating the Fresnel diffraction integral through weakly refractive
+    medium using the angular-spectrum method
+
+    Args:
+        Uin: Input field for propagation
+        wvl: Wavelength [m]
+        delta1: Source grid spacing [m]
+        deltan: Observation grid spacing [m]
+        z: Propagation distances [m]
+        t: Phase accumulation
+    
+    Returns:
+        Uout: Output field after propagation
+        xn: x coordinates at observation plane
+        yn: y coordinates at observation plane
+    """
+    N = np.shape(Uin)[0]
+    nx,ny = square_meshgrid(N)
+    k = 2*np.pi/wvl
+    nsq = nx**2 + ny**2
+    w = 0.47*N
+    sg = np.exp(-nsq**8/w**16)
+    z = np.hstack((0,z))
+    n = len(z)
+    Delta_z = z[1:n] - z[0:n-1]
+    alpha = z/z[n-1]
+    delta = (1-alpha) * delta1 + alpha * deltan
+    m = delta[1:n] / delta[0:n-1]
+    x1 = nx*delta[0]
+    y1 = ny*delta[0]
+    r1sq = x1**2 + y1**2
+    Q1 = np.exp(1j*k/2*(1-m[0])/Delta_z[0]*r1sq)
+    Uin = Uin * Q1 * t[:,:,0]
+    for idx in range(0,n-1):
+        deltaf = 1/(N*delta[idx])
+        fX = nx*deltaf
+        fY = ny*deltaf
+        fsq = fX**2 + fY**2
+        Z = Delta_z[idx]
+        Q2 = np.exp(-1j*np.pi**2*2*Z/m[idx]/k*fsq)
+        Uin = sg * t[:,:,idx+1] * \
+            ift2(Q2 * ft2(Uin/m[idx],delta[idx]),deltaf)
+    xn = nx * delta[n-1]
+    yn = ny * delta[n-1]
+    rnsq = xn**2 + yn**2
+    Q3 = np.exp(1j*k/2*(m[n-2]-1)/(m[n-2]*Z)*rnsq)
+    Uout = Q3 * Uin
     return Uout,xn,yn
