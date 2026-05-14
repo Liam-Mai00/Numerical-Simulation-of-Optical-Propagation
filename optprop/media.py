@@ -23,7 +23,7 @@ def ft_phase_screen(r0,N,delta,L0,l0):
 
     del_f = 1/(N*delta)
     fx,fy = square_meshgrid(N,del_f)
-    th,f = cart2pol(fx,fy)
+    f,th = cart2pol(fx,fy)
     fm = 5.92/l0/(2*np.pi)
     f0 = 1/L0
     PSD_phi = 0.023*r0**(-5/3)*np.exp(-(f/fm)**2)\
@@ -45,15 +45,18 @@ def ft_sh_phase_screen(r0,N,delta,L0,l0):
         del_f = 1/(3**p*D)
         fx = np.arange(-1,2) * del_f
         fx,fy = np.meshgrid(fx,fx)
-        th,f = cart2pol(fx,fy)
+        f,th = cart2pol(fx,fy)
         fm = 5.92/l0/(2*np.pi)
         f0 = 1/L0
         PSD_phi = 0.023*r0**(-5/3)*np.exp(-(f/fm)**2)\
         /(f**2+f0**2)**(11/6)
         PSD_phi[1,1] = 0
         cn = (randn(3,3) + 1j*randn(3,3)) * np.sqrt(PSD_phi)*del_f
+        cn = cn.flatten(order='F')
         SH = np.zeros((N,N))
         for ii in range(0,9):
+            fx = fx.flatten(order='F')
+            fy = fy.flatten(order='F')
             SH = SH + cn[ii] * \
                 np.exp(1j*2*np.pi*(fx[ii]*x+fy[ii]*y))
         phz_lo = phz_lo + SH

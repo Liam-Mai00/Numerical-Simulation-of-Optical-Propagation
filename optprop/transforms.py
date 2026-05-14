@@ -22,6 +22,7 @@ def cart2pol(x, y):
 def pol2cart(rho, phi):
     """
     Transforms from Polar to Cartesian geometry
+    (Output is reversed from MATLAB standard)
 
     Args:
         rho: radius
