@@ -35,5 +35,6 @@ For laminar flow (occurs at small scales: $0 <= r << l_0$), the properties diffe
 
 #math.equation[$D_v (r) = C_v^2l_0^(-4/3)r^2$]
 
-For larger scales, the flow is highly anisotropic. 
+For larger scales, the flow is highly anisotropic. The potential temperature $theta$ can follow a similar analysis since potential temperature and ordinary temperature are linearly related.
 
+#math.equation[$D_(phi)$$]
