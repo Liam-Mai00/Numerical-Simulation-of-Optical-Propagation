@@ -27,7 +27,9 @@ $r$ = Average size of eddie
 Structure function is defined as the square of the speeds so the structure function of eddie velocity is defined as:
 
 #math.equation[$D_v (r) = C_v^2r^(2/3)$]
-$C_v$ = Velocity structure parameter
+$C_v^2$ = Velocity structure parameter
+
+(the square is a result of the structure function definition)
 
 For the rest of the document, $D$ denotes a structure function and the subscript represents the kind of structure function.
 
@@ -37,4 +39,45 @@ For laminar flow (occurs at small scales: $0 <= r << l_0$), the properties diffe
 
 For larger scales, the flow is highly anisotropic. The potential temperature $theta$ can follow a similar analysis since potential temperature and ordinary temperature are linearly related.
 
-#math.equation[$D_(phi)$$]
+#math.equation[$D_(theta)(r)= cases(
+  C_(theta)^2l_0^(-4/3)r^2 \,& 0 <= r << l_0,
+  C_(theta)^2r^(2/3) \,& l_0<< r << L_0,
+)$]
+$C_(theta)^2$ = Potential temperature structure parameter
+
+To be able to produce a refractive index statistical model we need a few more considerations:
+
+The refractive index $n$ at a point in space $bold(r)$ can be written as:
+#math.equation[$n(bold(r))=mu_n (bold(r))+n_1(bold(r))$]
+where, $mu_n approx 1$ and is slowly varying mean value of refractive index and 
+$n_1(bold(r))$ is the deviation from the mean value. This means that $n_1(bold(r))$ is modelled with a 0 mean random process.
+
+For *optical wavelengths*, the refractive index at a point in space can approximated by:
+
+#math.equation[$n(bold(r)) approx 1 + 77.6 times 10^(-5)(P(bold(r)))/(T(bold(r))) "for" lambda = 0.5mu m$]
+Where:
+
+$P$ = Pressure [millibars]
+
+$T$ = Temperatrue [Kelvin]
+
+Variation in refractive index is given as:
+
+#math.equation[$d n = 7.99 times 10^(-5)(d P-(d T)/(T^2))$]
+
+Given that pressure is relatively *uniform* and potential temperature $theta$ is linearly related to ordinary temperature $T$, refractive index variation can then be written as:
+
+#math.equation[$d n = 7.99 times 10^(-5)(d theta)/(T^2)$]
+
+Variation in refractive index $d n$ is directly proportional to the variation in potential temperature $d theta$ so the refractive index structure function $D_n(r)$ follows the same power law as $D_(theta)(r)$:
+
+#math.equation[$D_n (r) = cases(
+  C_n^2l_0^(-4/3)r^2 \, & 0<=r<<l_0,
+  C_n^2r^(-2/3) \, & l_0<<r<<L_0,
+)$]
+$C_n^2$ = Refractive index structure parameter
+
+- $C_n^2$ is measured in $m^(-2/3)$
+- $C_n^2$ ranges from $10^(-17)$ to $10^(-13)m^(-2/3)$ 
+- Small values at high altitude
+- Large values near ground
