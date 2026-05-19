@@ -1,4 +1,7 @@
-#set math.equation(block:true,numbering: "(9.1)")
+#set math.equation(
+  block:true,
+  numbering:"(9.1)",
+  )
 #set heading(numbering:"9.1")
 #set document(title:[Chapter 9: Propagation through Atmospheric Turbulence])
 
@@ -54,7 +57,7 @@ $n_1(bold(r))$ is the deviation from the mean value. This means that $n_1(bold(r
 
 For *optical wavelengths*, the refractive index at a point in space can approximated by:
 
-#math.equation[$n(bold(r)) approx 1 + 77.6 times 10^(-5)(P(bold(r)))/(T(bold(r))) "for" lambda = 0.5mu m$]
+#math.equation[$n(bold(r)) approx 1 + 77.6 times 10^(-5)(P(bold(r)))/(T(bold(r))) "for" lambda = 0.5mu m$]<refidxoptwvl>
 Where:
 
 $P$ = Pressure [millibars]
@@ -74,10 +77,13 @@ Variation in refractive index $d n$ is directly proportional to the variation in
 #math.equation[$D_n (r) = cases(
   C_n^2l_0^(-4/3)r^2 \, & 0<=r<<l_0,
   C_n^2r^(-2/3) \, & l_0<<r<<L_0,
-)$]
+)$]<refidxstrfn>
+
 $C_n^2$ = Refractive index structure parameter
 
 - $C_n^2$ is measured in $m^(-2/3)$
 - $C_n^2$ ranges from $10^(-17)$ to $10^(-13)m^(-2/3)$ 
 - Small values at high altitude
 - Large values near ground
+
+It is often necessary to have a spectral description of the refractive index fluctations. The refractive index power spectral density $bold(Phi)_n (kappa)$ can be computed from @refidxstrfn
