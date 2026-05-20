@@ -1,8 +1,10 @@
+#set heading(numbering:"9.1")
 #set math.equation(
   block:true,
-  numbering:"(9.1)",
-  )
-#set heading(numbering:"9.1")
+  numbering: (..nums) => {
+  let section = counter(heading).get().first()
+  numbering("(1.1)", 9, ..nums)
+})
 #set document(title:[Chapter 9: Propagation through Atmospheric Turbulence])
 
 #title()
@@ -40,12 +42,13 @@ For laminar flow (occurs at small scales: $0 <= r << l_0$), the properties diffe
 
 #math.equation[$D_v (r) = C_v^2l_0^(-4/3)r^2$]
 
-For larger scales, the flow is highly anisotropic. The potential temperature $theta$ can follow a similar analysis since potential temperature and ordinary temperature are linearly related.
+For larger scales, the flow is highly anisotropic. The potential temperature $theta$ can follow a similar analysis since potential temperature and ordinary temperature are linearly related. The potential temperature structure function follows:
 
 #math.equation[$D_(theta)(r)= cases(
   C_(theta)^2l_0^(-4/3)r^2 \,& 0 <= r << l_0,
   C_(theta)^2r^(2/3) \,& l_0<< r << L_0,
-)$]
+)$]<pottempstrfn>
+
 $C_(theta)^2$ = Potential temperature structure parameter
 
 To be able to produce a refractive index statistical model we need a few more considerations:
@@ -86,4 +89,27 @@ $C_n^2$ = Refractive index structure parameter
 - Small values at high altitude
 - Large values near ground
 
-It is often necessary to have a spectral description of the refractive index fluctations. The refractive index power spectral density $bold(Phi)_n (kappa)$ can be computed from @refidxstrfn
+It is often necessary to have a spectral description of the refractive index fluctations. The refractive index power spectral density $bold(Phi)_n (kappa)$ can be computed from @refidxstrfn. The Kolmogorov refractive index power spectral density is defined as:
+
+#math.equation[$bold(Phi)_n^K (kappa) = 0.033C_n^2 kappa^(-11/3)$ for $1/L_0<<kappa<<1/l_0$]<PSDkolmogorov>
+
+Where $kappa = 2pi (f_x bold(hat(i))+f_y bold(hat(j)))$ is the angular spacial frequency in rad/m.
+@PSDkolmogorov is valid for random fields that are:
+- Locally homogeneous
+- Locally isotropic
+
+There are other models such as the *von Karman* power spectral density (PSD):
+
+#math.equation[$Phi_n^(v K) = (0.033C_n^2)/((kappa^2+kappa_0^2)^(11/6))$ for $0<=kappa<=1/l_0$]
+
+And *modified von Karman* PSD:
+
+#math.equation[$bold(Phi)_n^(m v K) = 0.033C_n^2(exp(-kappa^2"/"kappa_m^2))/((kappa^2+kappa_0^2)^(11/6))$ for $0<=kappa<infinity$]
+$kappa_m = 5.92"/"l_0$
+
+$kappa_0 = 2pi"/"L_0$
+
+When dealing with electromagnetic wave propagation through the atmosphere, the refractive index can be considered as time independent because the speed of light is so fast, the times it takes for light to propagate through a turbulent eddie is much lower than the time it takes for the turbulent properties to change. Given the knowledge of wind speed, you can convert spatial statistics to temporal one.
+
+#math.equation[$phi.alt(x,y,t) = phi.alt(x-v_x t,y-v_y t,0)$]
+$v_x$ and $v_y$ are x,y components of the wind velocity
