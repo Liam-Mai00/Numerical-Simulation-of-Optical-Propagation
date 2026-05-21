@@ -54,7 +54,7 @@ $C_(theta)^2$ = Potential temperature structure parameter
 To be able to produce a refractive index statistical model we need a few more considerations:
 
 The refractive index $n$ at a point in space $bold(r)$ can be written as:
-#math.equation[$n(bold(r))=mu_n (bold(r))+n_1(bold(r))$]
+#math.equation[$n(bold(r))=mu_n (bold(r))+n_1(bold(r))$]<refidxpoint>
 where, $mu_n approx 1$ and is slowly varying mean value of refractive index and 
 $n_1(bold(r))$ is the deviation from the mean value. This means that $n_1(bold(r))$ is modelled with a 0 mean random process.
 
@@ -113,3 +113,17 @@ When dealing with electromagnetic wave propagation through the atmosphere, the r
 
 #math.equation[$phi.alt(x,y,t) = phi.alt(x-v_x t,y-v_y t,0)$]
 $v_x$ and $v_y$ are x,y components of the wind velocity
+
+= Optical Propagation through Turbulence
+#v(1em)
+The wave equation that covers any of the six field components is:
+#math.equation[$[nabla^2+k^2n^2(bold(r))]U(bold(r))=0$]<waveeqopt>
+
+To solve @waveeqopt, we assume weak fluctations which means $|n_1(bold(r))|<<1$. Then to rewrite $n^2(bold(r))$, we can use @refidxpoint and the assumption to derive an approximation for the square of the refractive index:
+
+#math.equation[$n^2(bold(r)) approx 1 + 2n_1(bold(r))$]<n2r>
+
+Substituting @n2r into @waveeqopt, results in the wave equation shown below:
+
+#math.equation[${nabla^2+k^2[1+2n_1(bold(r))]}U(bold(r)) = 0$]
+
