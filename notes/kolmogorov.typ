@@ -127,3 +127,40 @@ Substituting @n2r into @waveeqopt, results in the wave equation shown below:
 
 #math.equation[${nabla^2+k^2[1+2n_1(bold(r))]}U(bold(r)) = 0$]
 
+When a medium has a constant refractive index, @waveeqopt is solved with Fourier Optics and Green's functions. When medium is randomly inhomogeneous, perturbative method with Green's function is used.
+
+In Rytov's method, optical field is written as:
+
+#math.equation[$U(bold(r)) = U_0(bold(r))exp(psi (bold(r)))$]
+
+Where $U_0(bold(r))$ is the vacuum solution when $n_1 = 0$, and $psi(bold(r))$ is the complex phase perturbation of the form:
+
+#math.equation[$psi(bold(r)) = psi_1(bold(r)) + psi(bold(r)) + ...$]
+And 
+#math.equation[$psi(bold(r)) = chi + i phi.alt$]
+Where $chi$ is log-amplitude perturbation, and $phi.alt$ is phase perturbuation.
+
+= Optical parameters of atmosphere
+#v(1em)
+The derivation of these parameters have been ommited, akin to the original book. Nevertheless, here are some
+useful information from Rytov's theory:
+
+- Mean value of optical field
+#math.equation[$chevron.l U(bold(r) chevron.r = U_0(bold(r)) chevron.l exp psi(bold(r)) chevron.r$]
+
+- Mutual coherence function #footnote[Not sure what $bold(r)'$ is referring to here]
+#math.equation[$Gamma(bold(r),bold(r'),z) = chevron.l U(bold(r))U^*(bold(r)') chevron.r = U_0(bold(r))U^*_0(bold(r)') chevron.l exp[psi(bold(r))
+psi^*(bold(r)')]chevron.r$]
+
+- Modulus of complex coherence factor (coherence factor)
+#math.equation[$mu(bold(r),bold(r)',z) = (|(Gamma(bold(r),bold(r)',z))|)/[Gamma(bold(r),bold(r)',z)Gamma(bold(r)',bold(r)',z)]^(1/2)$]
+
+- Wave structure function #footnote[log-amplitude perturbation $chi$ structure function plus phase perturbation $phi.alt$ structure function]
+#math.equation[$D(bold(r),bold(r)',z) = -2ln mu(bold(r),bold(r)',z) = D_chi (bold(r),bold(r)',z) + D_phi.alt (bold(r),bold(r)',z)$]
+
+- Phase power spectral density
+#math.equation[$Phi_phi.alt(kappa) = 1/(4pi^2kappa^2) integral_0^infinity (sin(kappa r))/(kappa r)d/(d r)[r^2d/(d r)D_phi.alt (r)]d r$]
+
+- Mean MTF#footnote[Not sure what MTF is] of the turbulent path
+#math.equation[$cal(H)(f) = exp[-1/2D(lambda f_l f)]$]
+Where $f_l$ is the system focal length
