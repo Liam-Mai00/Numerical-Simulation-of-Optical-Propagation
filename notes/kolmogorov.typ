@@ -148,12 +148,12 @@ useful information from Rytov's theory:
 - Mean value of optical field
 #math.equation[$chevron.l U(bold(r) chevron.r = U_0(bold(r)) chevron.l exp psi(bold(r)) chevron.r$]
 
-- Mutual coherence function #footnote[Not sure what $bold(r)'$ is referring to here]
+- Mutual coherence function #footnote[$bold(r)' = bold(r) + Delta bold(r)$]
 #math.equation[$Gamma(bold(r),bold(r'),z) = chevron.l U(bold(r))U^*(bold(r)') chevron.r = U_0(bold(r))U^*_0(bold(r)') chevron.l exp[psi(bold(r))
 psi^*(bold(r)')]chevron.r$]
 
 - Modulus of complex coherence factor (coherence factor)
-#math.equation[$mu(bold(r),bold(r)',z) = (|(Gamma(bold(r),bold(r)',z))|)/[Gamma(bold(r),bold(r)',z)Gamma(bold(r)',bold(r)',z)]^(1/2)$]
+#math.equation[$mu(bold(r),bold(r)',z) = (|(Gamma(bold(r),bold(r)',z))|)/[Gamma(bold(r),bold(r)',z)Gamma(bold(r)',bold(r)',z)]^(1/2)$]<coherencefactor>
 
 - Wave structure function #footnote[log-amplitude perturbation $chi$ structure function plus phase perturbation $phi.alt$ structure function]
 #math.equation[$D(bold(r),bold(r)',z) = -2ln mu(bold(r),bold(r)',z) = D_chi (bold(r),bold(r)',z) + D_phi.alt (bold(r),bold(r)',z)$]
@@ -164,3 +164,15 @@ psi^*(bold(r)')]chevron.r$]
 - Mean MTF#footnote[Not sure what MTF is] of the turbulent path
 #math.equation[$cal(H)(f) = exp[-1/2D(lambda f_l f)]$]
 Where $f_l$ is the system focal length
+
+More about the refractive index structure parameter $C_n^2$:
++ $C_n^2$ is a measure of local turbulence strength
++ $C_n^2$ is a function of propagation distance $Delta z$
++ $C_n^2$ is commonly used to calculate parameters such as atmospheric coherence diameter $r_0$
+
+Given a *isotropic* and *homogeneous* optical field, the coherence factor from @coherencefactor can be computed as:
+#math.equation[$mu(bold(r),bold(r)',z) = mu(bold(r),bold(r)+Delta bold(r),z) = mu(Delta bold(r),z) = mu(|Delta bold(r)|,z)$]
+
+The coherence factor $mu$ depends on the *optical source* and the type of *power spectral density (PSD)* used. For example, if the source was a plane wave:
+
+#math.equation[$mu(|Delta bold(r)|,Delta z) = exp{-4pi^2k^2integral_0^(Delta z)integral_0^(infinity)bold(Phi)_n (kappa,z)[1-J_0(kappa|Delta bold(r)|)]kappa dif kappa dif z}$]
