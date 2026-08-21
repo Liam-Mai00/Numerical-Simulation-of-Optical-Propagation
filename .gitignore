@@ -3,3 +3,4 @@ __pycache__/
 .vscode/
 optprop.egg-info/
 tests/
+references/
