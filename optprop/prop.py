@@ -195,7 +195,7 @@ def ang_spec_multi_prop(Uin,wvl,delta1,deltan,z,t):
     y1 = ny*delta[0]
     r1sq = x1**2 + y1**2
     Q1 = np.exp(1j*k/2*(1-m[0])/Delta_z[0]*r1sq)
-    Uin = Uin * Q1 * t[:,:,0]
+    Uin = Uin * Q1 * t[0,:,:]
     for idx in range(0,n-1):
         deltaf = 1/(N*delta[idx])
         fX = nx*deltaf
@@ -203,7 +203,7 @@ def ang_spec_multi_prop(Uin,wvl,delta1,deltan,z,t):
         fsq = fX**2 + fY**2
         Z = Delta_z[idx]
         Q2 = np.exp(-1j*np.pi**2*2*Z/m[idx]/k*fsq)
-        Uin = sg * t[:,:,idx+1] * \
+        Uin = sg * t[idx+1,:,:] * \
             ift2(Q2 * ft2(Uin/m[idx],delta[idx]),deltaf)
     xn = nx * delta[n-1]
     yn = ny * delta[n-1]
